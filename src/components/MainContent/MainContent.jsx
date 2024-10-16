@@ -11,7 +11,7 @@ const MainContent = ({ weatherInfo }) => {
 
     return (
         <div
-            className="border text-sky-500 relative font-medium rounded-lg bg-white border-gray-300 shadow w-auto sm:w-11/12 md:w-4/5 sm:pt-6 sm:pb-10 py-6 px-4 sm:px-9">
+            className="border text-sky-500 relative font-medium rounded-lg bg-white border-gray-300  shadow sm:w-11/12 md:w-4/5 w-auto sm:pt-6 min-w-[295px] sm:pb-10 py-6 px-4 sm:px-9 ">
             <button
                 onClick={() => setWeatherData([])}
                 className={"absolute top-2 right-3 text-xl"}
@@ -25,7 +25,7 @@ const MainContent = ({ weatherInfo }) => {
                 <img className="w-10 sm:w-12" src={location} alt="Location icon"/>
             </div>
             <div
-                className="grid grid-rows-2 grid-cols-2 sm:grid-rows-1 sm:grid-cols-3 justify-center sm:justify-between">
+                className="grid grid-rows-2 grid-cols-2 sm:grid-rows-1 sm:grid-cols-3 justify-between sm:justify-between">
                 <div
                     className="flex sm:col-span-1 flex-col col-span-1 row-span-1 order-2 sm:order-1 gap-4 items-start justify-end">
                     <div className="flex flex-col justify-center">

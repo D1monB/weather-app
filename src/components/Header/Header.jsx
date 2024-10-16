@@ -14,7 +14,7 @@ const Header = () => {
 
             if (inputText){
                 setLoading(true)
-                const weatherData = await getWeatherData(cityInput);
+                const weatherData = await getWeatherData(cityInput.trim());
                 setWeatherData([weatherData]);
                 setCityInput('');
                 console.log(weatherData)
@@ -61,13 +61,13 @@ const Header = () => {
                     } }
                     placeholder="Enter city name"
                     onFocus={clearError}
-                    className={`block px-2 font-serif w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ${validInput ? "ring-gray-300" : "ring-rose-500"} placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 hover:border-rose-500 ${!validInput ? "border-rose-500" : "border-gray-300"}`}
+                    className={`block px-2 font-serif w-full rounded-md border-1 py-2 text-gray-900 ${!validInput || error ?  "border-2 border-rose-900" : "border border-gray-300"} shadow-sm ring-1 placeholder:text-gray-500 sm:text-sm sm:leading-6`}
                     type="text"
                     value={cityInput}
                     onChange={(e) => setCityInput(e.target.value)}
                 />
-                {(!validInput && !error) && <div className="text-rose-500 ml-2 text-xs">Please enter more than 2 characters</div>}
-                {error && <div className="text-rose-500 ml-2 text-xs">{error}</div>}
+                {(!validInput && !error) && <div className="font-medium text-rose-900 ml-2 text-xs">Please enter more than 2 characters</div>}
+                {error && <div className="font-medium text-rose-900 ml-2 text-xs">{error}</div>}
             </div>
             <button
                 onClick={() => onRequest()}

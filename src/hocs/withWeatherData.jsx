@@ -12,7 +12,7 @@ const withWeatherData = (WrappedComponent) => {
             return (
                 <div
                     onClick={() => setError(false)}
-                    className="shadow-xl text-rose-500 bg-white w-1/2 text-center cursor-pointer hover:shadow-lg py-2 rounded-xl transition duration-300 ease-in-out hover:text-rose-400 hover:"
+                    className="shadow-xl text-rose-900 bg-white min-w-[200px] sm:w-1/2 text-center cursor-pointer hover:shadow-lg py-2 px-2 rounded-xl transition duration-300 ease-in-out hover:text-rose-400"
                 >
                     {error}
                 </div>
