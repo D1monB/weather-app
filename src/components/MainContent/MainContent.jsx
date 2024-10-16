@@ -25,9 +25,9 @@ const MainContent = ({ weatherInfo }) => {
                 <img className="w-10 sm:w-12" src={location} alt="Location icon"/>
             </div>
             <div
-                className="grid grid-rows-2 grid-cols-2 sm:grid-rows-1 sm:grid-cols-3 justify-between sm:justify-between">
+                className="grid grid-rows-[1fr_auto] grid-cols-2 sm:grid-rows-1 sm:grid-cols-3 justify-between sm:justify-between">
                 <div
-                    className="flex sm:col-span-1 flex-col col-span-1 row-span-1 order-2 sm:order-1 gap-4 items-start justify-end">
+                    className="flex sm:col-span-1 flex-col col-span-1 row-span-1 order-2 sm:order-1 gap-4 items-start  justify-start sm:justify-end">
                     <div className="flex flex-col justify-center">
                         <p>{weatherInfo[0].month} {weatherInfo[0].day}</p>
                         <p>{weatherInfo[0].dayOfTheWeek}</p>
@@ -41,12 +41,12 @@ const MainContent = ({ weatherInfo }) => {
                         <p>Feels like {weatherInfo[0].feelsLike}°</p>
                     </div>
                 </div>
-                <div className="flex sm:col-span-1 col-span-2 row-span-1 gap-4 flex-col order-1 sm:order-2 items-center ">
+                <div className="flex mb-2 sm:mb-0 sm:col-span-1 col-span-2 row-span-1 gap-4 flex-col order-1 sm:order-2 items-center ">
                     <img src={weatherInfo[0].image} alt=""/>
                     <p className="text-2xl">{weatherInfo[0].weatherName}</p>
                 </div>
-                <div className="flex sm:col-span-1 justify-end col-span-1 row-span-1 order order-3 items-end">
-                    <ul className="text-sm gap-1 flex flex-col items-left">
+                <div className="flex sm:col-span-1 justify-end col-span-1 row-span-1 order order-3 items-start sm:items-end">
+                    <ul className="text-sm gap-1 flex flex-col justify-start items-left">
                         {weatherData.map((item, i) => (
                             <Item item={item} weatherInfo={weatherInfo[0]} key={i}/>
                         ))}
