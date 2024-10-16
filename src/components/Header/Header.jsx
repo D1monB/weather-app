@@ -1,4 +1,4 @@
-import useWeatherService from "../../Weather-service.js";
+import useWeatherService from "../../services/Weather-service/Weather-service.js";
 import {useCallback, useEffect, useState} from "react";
 import {useWeatherContext} from "../../providers/WeatherProvider.jsx";
 

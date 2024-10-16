@@ -1,5 +1,7 @@
 import withWeatherData from '../../hocs/withWeatherData.jsx'
 import PropTypes from 'prop-types';
+import temperature from '../../assets/temperature.png';
+import location from '../../assets/icons/location.png'
 import { weatherData } from "./weatherData.js";
 import {useWeatherContext} from "../../providers/WeatherProvider.jsx";
 
@@ -20,7 +22,7 @@ const MainContent = ({ weatherInfo }) => {
                 <h2 className="break-words">
                     {weatherInfo[0].cityName}
                 </h2>
-                <img className="w-10 sm:w-12" src="./src/assets/icons/location.png" alt=""/>
+                <img className="w-10 sm:w-12" src={location} alt="Location icon"/>
             </div>
             <div
                 className="grid grid-rows-2 grid-cols-2 sm:grid-rows-1 sm:grid-cols-3 justify-center sm:justify-between">
@@ -33,8 +35,8 @@ const MainContent = ({ weatherInfo }) => {
                     <div className="relative ">
                         <p className="flex items-center text-4xl">{weatherInfo[0].temp}°
                             <img className="w-12"
-                                 src="./src/assets/temperature.png"
-                                 alt=""/>
+                                 src={temperature}
+                                 alt="Temperature"/>
                         </p>
                         <p>Feels like {weatherInfo[0].feelsLike}°</p>
                     </div>

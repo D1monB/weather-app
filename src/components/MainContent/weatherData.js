@@ -1,34 +1,41 @@
+import sunrise from '../../assets/icons/sunrise.png';
+import sunset from '../../assets/icons/sunset.svg';
+import humidity from '../../assets/icons/humidity.svg';
+import wind from '../../assets/icons/wind.svg';
+import compass from '../../assets/icons/compass.svg';
+import pressure from '../../assets/icons/up-arrow.svg';
+
 const weatherData = [
     {
         title: 'sunrise',
         text: 'sunrise',
-        image: './src/assets/icons/sunrise.png'
+        image: sunrise
     },
     {
         title: 'sunset',
         text: 'sunset',
-        image: './src/assets/icons/sunset.svg'
+        image: sunset
     },
     {
         title: 'humidity',
         text: '%',
-        image: './src/assets/icons/humidity.svg'
+        image: humidity
     },
     {
         title: 'windSpeed',
         text: 'km/h',
-        image: './src/assets/icons/wind.svg'
+        image: wind
     },
     {
         title: 'direction',
         text: '',
-        image: './src/assets/icons/compass.svg'
+        image: compass
     },
     {
         title: 'pressure',
         text: 'mb',
-        image: './src/assets/icons/up-arrow.svg'
+        image: pressure
     }
-]
+];
 
-export {weatherData}
+export { weatherData };

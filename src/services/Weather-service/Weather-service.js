@@ -1,4 +1,5 @@
 import axios from 'axios';
+import weatherConditions from "./weatherConditions.js";
 import { format, fromUnixTime } from 'date-fns';
 
 const convertUnixToTime = (unixTimestamp) => {
@@ -9,17 +10,7 @@ const convertUnixToTime = (unixTimestamp) => {
 const monthsArray = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 const daysArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-const weatherConditions = {
-    "Clear": "./src/assets/sunny.png",
-    "FewClouds": "./src/assets/partly-cloudy.png",
-    "Clouds": "./src/assets/cloudy.png",
-    "Drizzle": "./src/assets/rainy.png",
-    "Rain": "./src/assets/rainy.png",
-    "Thunderstorm": "./src/assets/stormy.png",
-    "Snow": "./src/assets/snowy.png",
-    "Mist": "./src/assets/foggy.png",
-    "Windy": "./src/assets/windy.png"
-};
+
 
 const determineTheDirection = (lon, lat) => {
     let direction = '';
