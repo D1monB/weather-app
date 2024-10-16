@@ -4,15 +4,6 @@
     box-sizing: border-box;
 }
 
-html,body{;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-#root{
-   flex: 1;
-}
 
 @tailwind base;
 @tailwind components;
