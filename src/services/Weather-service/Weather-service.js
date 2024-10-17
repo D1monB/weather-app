@@ -10,8 +10,6 @@ const convertUnixToTime = (unixTimestamp) => {
 const monthsArray = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 const daysArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-
-
 const determineTheDirection = (lon, lat) => {
     let direction = '';
 
@@ -42,6 +40,8 @@ const useWeatherService = () => {
     const _url = 'https://api.openweathermap.org/data/2.5/weather?q=';
     const _api = `&appid=${import.meta.env.VITE_WEATHER_API_KEY}`;
     const _units = '&units=metric';
+    const _geoUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=';
+    const _limit = '&limit=5';
 
     const getWeatherData = async (city) => {
         try {
@@ -54,6 +54,21 @@ const useWeatherService = () => {
             }
         }
     }
+
+    const getCitySuggestions = async (cityName) => {
+        try {
+            const res = await axios.get(`${_geoUrl}${cityName}${_limit}${_api}`);
+            return res.data.map(city => ({
+                name: city.name,
+                country: city.country,
+            }));
+
+        } catch (e) {
+            console.log(e)
+            throw new Error('Error fetching city suggestions');
+        }
+    };
+
 
     const _transformWeatherData = (data) => {
         const date = new Date();
@@ -77,7 +92,7 @@ const useWeatherService = () => {
         }
     }
 
-    return { getWeatherData }
+    return { getWeatherData, getCitySuggestions }
 }
 
 export default useWeatherService
