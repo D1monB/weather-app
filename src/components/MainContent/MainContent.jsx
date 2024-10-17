@@ -14,7 +14,7 @@ const MainContent = ({ weatherInfo }) => {
             className="border text-sky-500 relative font-medium rounded-lg bg-white border-gray-300  shadow sm:w-11/12 md:w-4/5 w-auto sm:pt-6 min-w-[295px] sm:pb-10 py-6 px-4 sm:px-9 ">
             <button
                 onClick={() => setWeatherData([])}
-                className={"absolute top-2 right-3 text-xl"}
+                className={"absolute top-2 right-3  hover:opacity-75 text-xl"}
             >
                 x
             </button>
