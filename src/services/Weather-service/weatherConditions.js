@@ -16,7 +16,9 @@ const weatherConditions = {
     'Thunderstorm': stormy,
     'Snow': snowy,
     'Mist': foggy,
-    'Windy': windy
+    'Windy': windy,
+    'Fog': foggy,
+    'Haze' : foggy
 };
 
 export default weatherConditions;

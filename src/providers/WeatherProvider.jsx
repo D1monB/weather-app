@@ -4,8 +4,11 @@ const WeatherContext = createContext();
 
 export const WeatherProvider = ({ children }) => {
     const [weatherData, setWeatherData] = useState([]);
+    const [region, setRegion] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+    //The API does not very accurately transmit the city by coordinates, an error of 100m can give out the name of the city district.
+    const [cityName, setCityName] = useState('');
 
     const value = {
         weatherData,
@@ -13,7 +16,11 @@ export const WeatherProvider = ({ children }) => {
         loading,
         setLoading,
         error,
-        setError
+        setError,
+        setRegion,
+        region,
+        cityName,
+        setCityName
     }
 
     return (

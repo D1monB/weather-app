@@ -7,6 +7,15 @@ const convertUnixToTime = (unixTimestamp) => {
     return format(date, 'HH:mm');
 };
 
+const cityFilter = (cityArr) => {
+     const seen = new Set();
+
+     return cityArr.filter(city => {
+         const key = `${city.name} ${city.state}`
+         return seen.has(key) ? false : seen.add(key);
+     })
+}
+
 const monthsArray = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 const daysArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -37,15 +46,19 @@ const determineTheDirection = (lon, lat) => {
 
 const useWeatherService = () => {
     //https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
-    const _url = 'https://api.openweathermap.org/data/2.5/weather?q=';
+    //https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid={API key}
+    const _url = 'https://api.openweathermap.org/data/2.5/weather?';
     const _api = `&appid=${import.meta.env.VITE_WEATHER_API_KEY}`;
     const _units = '&units=metric';
     const _geoUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=';
     const _limit = '&limit=5';
 
-    const getWeatherData = async (city) => {
+    const getWeatherData = async (city, lon = '', lat = '') => {
         try {
-            const res = await axios.get(`${_url}${city}${_api}${_units}`);
+            const request = (lat !== '' && lon !== '')
+                ? `${_url}lat=${lat}&lon=${lon}${_api}${_units}`
+                : `${_url}q=${city}${_api}${_units}`;
+            const res = await axios.get(request);
             return _transformWeatherData(res.data)
         }
         catch (e){
@@ -58,12 +71,16 @@ const useWeatherService = () => {
     const getCitySuggestions = async (cityName) => {
         try {
             const res = await axios.get(`${_geoUrl}${cityName}${_limit}${_api}`);
-            return res.data.map(city => ({
-                name: city.name,
-                country: city.country,
-            }));
-
-        } catch (e) {
+            console.log(res.data)
+            return cityFilter(res.data.map(city => ({
+                                name: city.name,
+                                country: city.country,
+                                lon: city.lon,
+                                lat: city.lat,
+                                state: city.state,
+                            })));
+        }
+        catch (e) {
             console.log(e)
             throw new Error('Error fetching city suggestions');
         }
@@ -88,7 +105,8 @@ const useWeatherService = () => {
             humidity: data.main.humidity,
             pressure: data.main.pressure,
             image: weatherConditions[data.weather[0].main],
-            direction: determineTheDirection(data.coord.lon, data.coord.lat)
+            direction: determineTheDirection(data.coord.lon, data.coord.lat),
+            country: data.sys.country
         }
     }
 

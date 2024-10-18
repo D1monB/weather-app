@@ -1,27 +1,28 @@
 import useWeatherService from "../../services/Weather-service/Weather-service.js";
 import {useCallback, useEffect, useState} from "react";
 import {useWeatherContext} from "../../providers/WeatherProvider.jsx";
-import searchIcon from '../../assets/icons/search-icon.svg'
+import searchIcon from '../../assets/icons/search-icon.svg';
+import location from '../../assets/icons/location.png'
+import PropTypes from "prop-types";
 
-
-const Header = () => {
+const Header = ({countryCodes}) => {
     const [cityInput, setCityInput] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [validInput, setValidInput] = useState(true);
     const [showSuggestions, setShowSuggestions] = useState(false);
-    const { setWeatherData, setError, setLoading, error } = useWeatherContext();
+    const { setWeatherData, setError, setLoading, error, setRegion, setCityName } = useWeatherContext();
     const { getWeatherData, getCitySuggestions } = useWeatherService();
 
-    const onRequest = useCallback(async () => {
+    const onRequest = useCallback(async (lon = '', lat = '') => {
         try{
             const inputText = cityInput && cityInput.trim().length > 2
 
             if (inputText){
                 setLoading(true)
-                const weatherData = await getWeatherData(cityInput.trim());
+                const weatherData = await getWeatherData(cityInput.trim(), lon, lat);
                 setWeatherData([weatherData]);
+                setSuggestions([]);
                 setCityInput('');
-                console.log(weatherData)
             }
             else{
                 setValidInput(false)
@@ -41,7 +42,6 @@ const Header = () => {
         setError(false)
     }, [setValidInput, setError])
 
-
     const fetchCitySuggestions = useCallback(async () => {
         if(cityInput.length > 2){
             try {
@@ -60,7 +60,6 @@ const Header = () => {
     }, [cityInput])
 
     useEffect( () => {
-        console.log('fff')
         fetchCitySuggestions();
 
     }, [cityInput])
@@ -77,6 +76,7 @@ const Header = () => {
 
     }, [validInput, error, clearError]);
 
+
     const charactersError = (!validInput && !error) && <div className="font-medium text-rose-900 ml-2 text-xs">Please enter more than 2 characters</div>;
     const invalidCityError = error && <div className="font-medium text-rose-900 ml-2 text-xs">{error}</div>;
     const suggestionsList = (validInput && showSuggestions && suggestions.length > 0) &&
@@ -85,10 +85,21 @@ const Header = () => {
                 {suggestions.map((city, index) => (
                     <li
                         key={index}
-                        className="w-full pl-3 p-1 hover:bg-gray-200 cursor-pointer"
-                        onMouseDown={() => setCityInput(city.name)}
+                        className="flex items-center gap-3 w-full pl-1.5 p-1 hover:bg-gray-200 cursor-pointer"
+                        onMouseDown={async () => {
+                            setCityInput(city.name);
+                            setCityName(city.name);
+                            new Promise(resolve => setTimeout(resolve, 0))
+                            onRequest(city.lon, city.lat);
+                            setRegion(city.state);
+                        }}
                     >
-                        {city.name}
+                        <img className="w-7" src={location} alt="Location icon"/>
+                        <div className="flex items-center gap-4">
+                            <span>{city.name}</span>
+                            <span className="text-gray-500">{city.state}</span>
+                            <span>{countryCodes[city.country]}</span>
+                        </div>
                     </li>
                 ))}
             </ul>
@@ -101,6 +112,8 @@ const Header = () => {
                     onKeyUp={(e) => {
                         if (e.key === 'Enter') {
                             onRequest();
+                            setShowSuggestions(false);
+                            setCityName('');
                         }
                     }}
                     placeholder="Enter city name"
@@ -117,7 +130,10 @@ const Header = () => {
                     onChange={(e) => setCityInput(e.target.value)}
                 />
                 <button
-                    onClick={() => onRequest()}
+                    onClick={() => {
+                        onRequest();
+                        setCityName('')
+                    }}
                     role="button"
                     className="inline-flex items-center rounded-md bg-white text-white ring-inset py-2 hover:opacity-75"
                 >
@@ -130,5 +146,9 @@ const Header = () => {
         </div>
     );
 };
+
+Header.propTypes = {
+    countryCodes: PropTypes.object.isRequired
+}
 
 export default Header;
