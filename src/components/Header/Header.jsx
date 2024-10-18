@@ -76,7 +76,6 @@ const Header = ({countryCodes}) => {
 
     }, [validInput, error, clearError]);
 
-
     const charactersError = (!validInput && !error) && <div className="font-medium text-rose-900 ml-2 text-xs">Please enter more than 2 characters</div>;
     const invalidCityError = error && <div className="font-medium text-rose-900 ml-2 text-xs">{error}</div>;
     const suggestionsList = (validInput && showSuggestions && suggestions.length > 0) &&
@@ -88,10 +87,10 @@ const Header = ({countryCodes}) => {
                         className="flex items-center gap-3 w-full pl-1.5 p-1 hover:bg-gray-200 cursor-pointer"
                         onMouseDown={async () => {
                             setCityInput(city.name);
-                            setCityName(city.name);
-                            new Promise(resolve => setTimeout(resolve, 0))
+                            await new Promise(resolve => setTimeout(resolve, 0))
                             onRequest(city.lon, city.lat);
                             setRegion(city.state);
+                            setCityName(city.name);
                         }}
                     >
                         <img className="w-7" src={location} alt="Location icon"/>
