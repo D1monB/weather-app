@@ -8,8 +8,6 @@ import {useWeatherContext} from "../../providers/WeatherProvider.jsx";
 const MainContent = ({ weatherInfo }) => {
     const { setWeatherData, cityName } = useWeatherContext();
 
-    console.log(weatherInfo)
-
     return (
         <div
             className="border text-sky-500 relative font-medium shadow-2xl rounded-lg bg-white border-gray-300 w-auto sm:w-10/12 md:w-11/12 sm:pt-6 min-w-[295px] sm:pb-10 py-6 px-4 sm:px-9 ">

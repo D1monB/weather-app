@@ -71,7 +71,6 @@ const useWeatherService = () => {
     const getCitySuggestions = async (cityName) => {
         try {
             const res = await axios.get(`${_geoUrl}${cityName}${_limit}${_api}`);
-            console.log(res.data)
             return cityFilter(res.data.map(city => ({
                                 name: city.name,
                                 country: city.country,
