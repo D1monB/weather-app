@@ -19,8 +19,13 @@ const Header = ({countryCodes}) => {
 
             if (inputText){
                 setLoading(true)
+
                 const weatherData = await getWeatherData(cityInput.trim(), lon, lat);
                 setWeatherData([weatherData]);
+
+                if (!lon && !lat && suggestions.length > 0)
+                    setRegion(suggestions[0].state);
+
                 setSuggestions([]);
                 setCityInput('');
             }
@@ -51,7 +56,6 @@ const Header = ({countryCodes}) => {
             catch (e){
                 console.log(e)
             }
-
         }
         else if (suggestions.length > 0) {
             setSuggestions([]);
@@ -60,8 +64,11 @@ const Header = ({countryCodes}) => {
     }, [cityInput])
 
     useEffect( () => {
-        fetchCitySuggestions();
+        const debounceTimer = setTimeout(() => {
+            fetchCitySuggestions();
+        }, 50);
 
+        return () => clearTimeout(debounceTimer);
     }, [cityInput])
 
     useEffect(() => {
@@ -94,7 +101,7 @@ const Header = ({countryCodes}) => {
                         }}
                     >
                         <img className="w-7" src={location} alt="Location icon"/>
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-4 pr-2">
                             <span>{city.name}</span>
                             <span className="text-gray-500">{city.state}</span>
                             <span>{countryCodes[city.country]}</span>
