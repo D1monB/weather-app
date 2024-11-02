@@ -9,6 +9,7 @@ const Header = ({countryCodes}) => {
     const [cityInput, setCityInput] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [validInput, setValidInput] = useState(true);
+    const [citySelected, setCitySelected] = useState(false);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const { setWeatherData, setError, setLoading, error, setRegion, setCityName } = useWeatherContext();
     const { getWeatherData, getCitySuggestions } = useWeatherService();
@@ -28,9 +29,11 @@ const Header = ({countryCodes}) => {
 
                 setSuggestions([]);
                 setCityInput('');
+                console.log('aaa')
             }
             else{
                 setValidInput(false)
+                console.log('fff')
             }
         }
         catch (e){
@@ -48,7 +51,7 @@ const Header = ({countryCodes}) => {
     }, [setValidInput, setError])
 
     const fetchCitySuggestions = useCallback(async () => {
-        if(cityInput.length > 2){
+        if(cityInput.length > 2 && !citySelected){
             try {
                 const cityList = await getCitySuggestions(cityInput);
                 setSuggestions(cityList)
@@ -58,17 +61,20 @@ const Header = ({countryCodes}) => {
             }
         }
         else if (suggestions.length > 0) {
+            setCitySelected(false);
             setSuggestions([]);
         }
 
     }, [cityInput])
 
     useEffect( () => {
-        const debounceTimer = setTimeout(() => {
-            fetchCitySuggestions();
-        }, 50);
+       if(cityInput){
+           const debounceTimer = setTimeout(() => {
+               fetchCitySuggestions();
+           }, 50);
 
-        return () => clearTimeout(debounceTimer);
+           return () => clearTimeout(debounceTimer);
+       }
     }, [cityInput])
 
     useEffect(() => {
@@ -94,7 +100,7 @@ const Header = ({countryCodes}) => {
                         className="flex items-center gap-3 w-full pl-1.5 p-1 hover:bg-gray-200 cursor-pointer"
                         onMouseDown={async () => {
                             setCityInput(city.name);
-                            await new Promise(resolve => setTimeout(resolve, 0))
+                            setCitySelected(true);
                             onRequest(city.lon, city.lat);
                             setRegion(city.state);
                             setCityName(city.name);
@@ -110,6 +116,7 @@ const Header = ({countryCodes}) => {
                 ))}
             </ul>
         )
+
 
     return (
         <div className= "flex flex-col min-h-full flex-1 items-start py-12 gap-1 w-full sm:w-11/12 relative md:w-3/4">
@@ -128,7 +135,7 @@ const Header = ({countryCodes}) => {
                         setShowSuggestions(true);
                     }}
                     onBlur={() => {
-                        setShowSuggestions(false);
+                        suggestions.length > 0 && setShowSuggestions(false);
                     }}
                     className={`block font-serif w-full py-2 text-gray-900 border-none focus:outline-none ${!validInput || error ? "border-2 border-rose-900" : "border-gray-300"} placeholder:text-gray-500 sm:text-sm sm:leading-6`}
                     type="text"
