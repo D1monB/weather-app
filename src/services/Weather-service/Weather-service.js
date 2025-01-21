@@ -44,7 +44,7 @@ const determineTheDirection = (lon, lat) => {
 }
 
 
-const useWeatherService = () => {
+const weatherService = () => {
     //https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
     //https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid={API key}
     const _url = 'https://api.openweathermap.org/data/2.5/weather?';
@@ -112,4 +112,4 @@ const useWeatherService = () => {
     return { getWeatherData, getCitySuggestions }
 }
 
-export default useWeatherService
+export default weatherService

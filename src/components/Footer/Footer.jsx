@@ -1,13 +1,10 @@
 import withWeatherData from "../../hocs/withWeatherData.jsx";
 import PropTypes from "prop-types";
 import countryLocation from "../../assets/icons/country-location-icon.svg"
-import {useWeatherContext} from "../../providers/WeatherProvider.jsx";
 import regionLocation from "../../assets/icons/region.png"
 
 // eslint-disable-next-line react-refresh/only-export-components
-const Footer = ({ weatherInfo, countryCodes }) => {
-
-    const { region } = useWeatherContext();
+const Footer = ({ weatherInfo, countryCodes, region }) => {
 
     return (
         <div className="w-auto text-sky-500 font-medium sm:w-10/12 md:w-11/12 min-w-[295px] mt-4 flex gap-y-3 flex-col items-center shadow-2xl rounded-lg ">
@@ -28,6 +25,7 @@ const Footer = ({ weatherInfo, countryCodes }) => {
 Footer.propTypes = {
     weatherInfo: PropTypes.array.isRequired,
     countryCodes: PropTypes.object.isRequired,
+    region: PropTypes.string
 }
 // eslint-disable-next-line react-refresh/only-export-components
 export default withWeatherData(Footer);

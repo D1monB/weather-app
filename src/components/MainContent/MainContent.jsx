@@ -2,17 +2,15 @@ import withWeatherData from '../../hocs/withWeatherData.jsx'
 import PropTypes from 'prop-types';
 import temperature from '../../assets/temperature.png';
 import { weatherData } from "./weatherData.js";
-import {useWeatherContext} from "../../providers/WeatherProvider.jsx";
 
 // eslint-disable-next-line react-refresh/only-export-components
-const MainContent = ({ weatherInfo }) => {
-    const { setWeatherData, cityName } = useWeatherContext();
+const MainContent = ({ weatherInfo, clearWeatherData, cityName }) => {
 
     return (
         <div
             className="border text-sky-500 relative font-medium shadow-2xl rounded-lg bg-white border-gray-300 w-auto sm:w-10/12 md:w-11/12 sm:pt-6 min-w-[295px] sm:pb-10 py-6 px-4 sm:px-9 ">
             <button
-                onClick={() => setWeatherData([])}
+                onClick={clearWeatherData}
                 className={"absolute top-2 right-3  hover:opacity-75 text-xl"}
             >
                 x
@@ -81,6 +79,8 @@ Item.propTypes = {
 
 MainContent.propTypes = {
     weatherInfo: PropTypes.array.isRequired,
+    clearWeatherData: PropTypes.func.isRequired,
+    cityName: PropTypes.string.isRequired,
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
