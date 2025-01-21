@@ -21,7 +21,7 @@ const Suggestions = ({ countryCodes, cityInput, getWeatherData}) => {
 
     const onRequest = async () => {
         if (cityInput.trim().length > 2) {
-            dispatch(fetchCitySuggestions(cityInput));
+            dispatch(fetchCitySuggestions([cityInput]));
         }
         else {
             dispatch(clearSuggestions());

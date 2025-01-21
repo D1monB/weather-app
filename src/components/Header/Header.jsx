@@ -25,7 +25,7 @@ const Header = ({ countryCodes }) => {
         const isValidText = city && city.trim().length > 2
 
             if (isValidText){
-                const res = await dispatch(fetchCityWeather(city.trim(), lon, lat));
+                const res = await dispatch(fetchCityWeather([city.trim(), lon, lat]));
 
                if (res.meta.requestStatus !== "rejected"){
                    if (!lon || !lat){

@@ -4,8 +4,8 @@ import weatherService from '../../services/Weather-service/Weather-service';
 const { getWeatherData, getCitySuggestions } = weatherService();
 const createGenericAsyncThunk = (name, asyncFn) => createAsyncThunk(
     name,
-    async (...args) => {
-        return await asyncFn(...args)
+    async (arg) => {
+        return await asyncFn(...arg)
     }
 )
 
